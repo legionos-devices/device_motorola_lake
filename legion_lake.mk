@@ -1,5 +1,6 @@
 #
 # Copyright (C) 2017 The LineageOS Open Source Project
+# Copyright (C) 2018-2021 Project-LegionOS
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,11 +17,13 @@
 
 # Inherit some common AospExtended stuff.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-$(call inherit-product, vendor/aosp/config/common.mk)
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_p.mk)
+
+# Inherit LegionOS product configuration
+$(call inherit-product, vendor/legion/config/common_full_phone.mk)
 
 # Device
 $(call inherit-product, device/motorola/lake/device.mk)
@@ -60,9 +63,22 @@ PRODUCT_PACKAGES += \
 # Recovery
 TARGET_RECOVERY_FSTAB := device/motorola/sdm660-common/rootdir/etc/fstab.qcom
 
+# LegionOS Device Maintainers
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.maintainer.name=VitorSSSouza
+
+#Boot Animation Resolution
+TARGET_BOOT_ANIMATION_RES := 1080
+
+#Play bold Play wild
+LEGION_BUILD_TYPE := OFFICIAL
+
+#Gapps Architecture
+TARGET_GAPPS_ARCH := arm64
+
 # Device identifiers
 PRODUCT_DEVICE := lake
-PRODUCT_NAME := aosp_lake
+PRODUCT_NAME := legion_lake
 PRODUCT_BRAND := motorola
 PRODUCT_MODEL := Moto G7 Plus
 PRODUCT_MANUFACTURER := Motorola
@@ -73,3 +89,4 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
     PRIVATE_BUILD_DESC="lake-user 10 QPWS30.61-21-18-7 fac4a release-keys"
 
 BUILD_FINGERPRINT := motorola/lake_retail/lake:10/QPWS30.61-21-18-7/fac4a:user/release-keys
+
